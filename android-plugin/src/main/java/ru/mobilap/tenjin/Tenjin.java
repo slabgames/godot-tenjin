@@ -19,6 +19,7 @@ import org.godotengine.godot.Godot;
 import org.godotengine.godot.GodotLib;
 import org.godotengine.godot.plugin.GodotPlugin;
 import org.godotengine.godot.plugin.SignalInfo;
+import org.godotengine.godot.plugin.UsedByGodot;
 
 public class Tenjin extends GodotPlugin
 {
@@ -28,7 +29,7 @@ public class Tenjin extends GodotPlugin
     public Tenjin(Godot godot) 
     {
         super(godot);
-        activity = godot;
+        activity = getActivity();
     }
 
     @Override
@@ -36,12 +37,12 @@ public class Tenjin extends GodotPlugin
         return "Tenjin";
     }
 
-    @Override
-    public List<String> getPluginMethods() {
-        return Arrays.asList(
-                             "init", "logEvent", "logEventWithValue", "logPurchase", "logPurchaseWithSignature", "advertising_id"
-                             );
-    }
+//    @Override
+//    public List<String> getPluginMethods() {
+//        return Arrays.asList(
+//                             "init", "logEvent", "logEventWithValue", "logPurchase", "logPurchaseWithSignature", "advertising_id"
+//                             );
+//    }
 
     /*
     @Override
@@ -55,9 +56,11 @@ public class Tenjin extends GodotPlugin
         return null;
     }
 
+    @UsedByGodot
     public void init(final String _apiKey, final String _deepLinkUri) {
         apiKey = _apiKey;
         TenjinSDK instance = TenjinSDK.getInstance(activity, apiKey);
+        instance.setAppStore(TenjinSDK.AppStoreType.googleplay);
         if(_deepLinkUri != null && _deepLinkUri != "") {
             instance.connect(_deepLinkUri);
         } else {
@@ -79,26 +82,31 @@ public class Tenjin extends GodotPlugin
         });
     }
 
+    @UsedByGodot
     public void logEvent(final String event) {
         if(apiKey != null)
             tenjinInstance().eventWithName(event);
     }
 
+    @UsedByGodot
     public void logEventWithValue(final String event, final int value) {
         if(apiKey != null)
             tenjinInstance().eventWithNameAndValue(event, ""+value);
     }
 
+    @UsedByGodot
     public void logPurchase(final String productId, final String currencyCode, final int quantity, final float unitPrice) {
         if(apiKey != null)
             tenjinInstance().transaction(productId, currencyCode, quantity, unitPrice);
     }
 
+    @UsedByGodot
     public void logPurchaseWithSignature(final String productId, final String currencyCode, final int quantity, final float unitPrice, final String purchaseData, final String dataSignature) {
         if(apiKey != null)
             tenjinInstance().transaction(productId, currencyCode, quantity, unitPrice, purchaseData, dataSignature);
     }
-    
+
+    @UsedByGodot
     public String advertising_id()
     {
         Info adInfo = null;
