@@ -23,7 +23,7 @@ android {
     buildToolsVersion "29.0.1"
 
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 35
         versionCode 1
         versionName "1.0"
@@ -52,7 +52,7 @@ dependencies {
 //    implementation 'com.google.android.gms:play-services-analytics:17.0.0'
     implementation 'com.google.android.gms:play-services-ads-identifier:18.2.0'
     implementation 'com.android.installreferrer:installreferrer:2.2'
-    implementation 'com.facebook.android:facebook-applinks:[5.0,)'
+    implementation 'com.facebook.android:facebook-applinks:18.0.2'
 }
 
 group = 'ru.mobilap.godot'
