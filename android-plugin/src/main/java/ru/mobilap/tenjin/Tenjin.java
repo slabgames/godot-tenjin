@@ -3,10 +3,16 @@ package ru.mobilap.tenjin;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+
 import com.facebook.applinks.AppLinkData;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient.Info;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.ironsource.mediationsdk.IronSource;
+import com.ironsource.mediationsdk.impressionData.ImpressionData;
+import com.ironsource.mediationsdk.impressionData.ImpressionDataListener;
 import com.tenjin.android.Callback;
 import com.tenjin.android.TenjinSDK;
 import java.io.IOException;
@@ -32,6 +38,7 @@ public class Tenjin extends GodotPlugin
         activity = getActivity();
     }
 
+    @NonNull
     @Override
     public String getPluginName() {
         return "Tenjin";
@@ -57,7 +64,7 @@ public class Tenjin extends GodotPlugin
     }
 
     @UsedByGodot
-    public void init(final String _apiKey, final String _deepLinkUri) {
+    public void init(final String _apiKey, final String ironAppSourceKey, final String _deepLinkUri) {
         apiKey = _apiKey;
         TenjinSDK instance = TenjinSDK.getInstance(activity, apiKey);
         instance.setAppStore(TenjinSDK.AppStoreType.googleplay);
@@ -68,6 +75,16 @@ public class Tenjin extends GodotPlugin
         }
         Log.i("godot", "Tenjin plugin inited!");
         Log.i("godot", "Device GAID: "+advertising_id());
+        // Initialize IronSource
+        IronSource.addImpressionDataListener(new ImpressionDataListener() {
+            @Override
+            public void onImpressionSuccess(ImpressionData impressionData) {
+                instance.eventAdImpressionIronSource(impressionData);
+            }
+        });
+        IronSource.init(activity, ironAppSourceKey, IronSource.AD_UNIT.BANNER);
+
+
         instance.getDeeplink(new Callback() {
             @Override
             public void onSuccess(boolean clickedTenjinLink, boolean isFirstSession, Map<String, String> data) {

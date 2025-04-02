@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath "com.android.tools.build:gradle:8.7.3"
 //        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
     }
 }
@@ -19,7 +19,7 @@ allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 34
+    compileSdkVersion 35
     buildToolsVersion "29.0.1"
 
     defaultConfig {
@@ -53,6 +53,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads-identifier:18.2.0'
     implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'com.facebook.android:facebook-applinks:18.0.2'
+    implementation 'com.unity3d.ads-mediation:mediation-sdk:8.7.0'
+    implementation 'com.unity3d.ads-mediation:adquality-sdk:7.24.0'
 }
 
 group = 'ru.mobilap.godot'
