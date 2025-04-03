@@ -79,7 +79,8 @@ public class Tenjin extends GodotPlugin
                 tenjinInstance().eventAdImpressionIronSource(impressionData);
             }
         });
-        IronSource.init(activity, ironAppSourceKey, IronSource.AD_UNIT.BANNER);
+
+//        IronSource.init(activity, ironAppSourceKey, IronSource.AD_UNIT.BANNER);
 
 
         instance.getDeeplink(new Callback() {
