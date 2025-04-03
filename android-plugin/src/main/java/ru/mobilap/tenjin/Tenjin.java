@@ -18,8 +18,10 @@ import com.tenjin.android.TenjinSDK;
 import java.io.IOException;
 import java.lang.Exception;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.godotengine.godot.Godot;
 import org.godotengine.godot.GodotLib;
@@ -44,19 +46,14 @@ public class Tenjin extends GodotPlugin
         return "Tenjin";
     }
 
+
+
+
 //    @Override
-//    public List<String> getPluginMethods() {
-//        return Arrays.asList(
-//                             "init", "logEvent", "logEventWithValue", "logPurchase", "logPurchaseWithSignature", "advertising_id"
-//                             );
+//    public Set<SignalInfo> getPluginSignals() {
+//        return Collections.singleton(loggedInSignal);
 //    }
 
-    /*
-    @Override
-    public Set<SignalInfo> getPluginSignals() {
-        return Collections.singleton(loggedInSignal);
-    }
-    */
 
     @Override
     public View onMainCreate(Activity activity) {
@@ -79,7 +76,7 @@ public class Tenjin extends GodotPlugin
         IronSource.addImpressionDataListener(new ImpressionDataListener() {
             @Override
             public void onImpressionSuccess(ImpressionData impressionData) {
-                instance.eventAdImpressionIronSource(impressionData);
+                tenjinInstance().eventAdImpressionIronSource(impressionData);
             }
         });
         IronSource.init(activity, ironAppSourceKey, IronSource.AD_UNIT.BANNER);

@@ -21,6 +21,7 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 35
     buildToolsVersion "29.0.1"
+    namespace "ru.mobilap.tenjin"
 
     defaultConfig {
         minSdkVersion 21
