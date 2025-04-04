@@ -61,7 +61,7 @@ public class Tenjin extends GodotPlugin
     }
 
     @UsedByGodot
-    public void init(final String _apiKey, final String ironAppSourceKey, final String _deepLinkUri) {
+    public void init(final String _apiKey, final String _deepLinkUri) {
         apiKey = _apiKey;
         TenjinSDK instance = TenjinSDK.getInstance(activity, apiKey);
         instance.setAppStore(TenjinSDK.AppStoreType.googleplay);
@@ -72,15 +72,7 @@ public class Tenjin extends GodotPlugin
         }
         Log.i("godot", "Tenjin plugin inited!");
         Log.i("godot", "Device GAID: "+advertising_id());
-        // Initialize IronSource
-        IronSource.addImpressionDataListener(new ImpressionDataListener() {
-            @Override
-            public void onImpressionSuccess(ImpressionData impressionData) {
-                tenjinInstance().eventAdImpressionIronSource(impressionData);
-            }
-        });
 
-//        IronSource.init(activity, ironAppSourceKey, IronSource.AD_UNIT.BANNER);
 
 
         instance.getDeeplink(new Callback() {
@@ -93,6 +85,18 @@ public class Tenjin extends GodotPlugin
                         }
                     }
                 }
+            }
+        });
+    }
+
+    @UsedByGodot
+    public void initILRDIronSource(){
+        // Initialize IronSource
+        IronSource.addImpressionDataListener(new ImpressionDataListener() {
+            @Override
+            public void onImpressionSuccess(ImpressionData impressionData) {
+                tenjinInstance().eventAdImpressionIronSource(impressionData);
+                Log.d("godot", "ILRD onImpressionSuccess : " + impressionData.toString());
             }
         });
     }
